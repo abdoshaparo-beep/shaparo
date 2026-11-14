@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Portfolio of Abdelrahman Ahmed, a creative Graphic Designer specializing in visual design, branding, and photo manipulation.">
+    <title>Abdelrahman Ahmed | Graphic Designer</title>
+
+    <!-- Google Fonts: Outfit for headers, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo"><i class="fa-solid fa-infinity"></i> Shaparo</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link" data-i18n="nav-home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-i18n="nav-about">About</a></li>
+                <li><a href="#services" class="nav-link" data-i18n="nav-services">Services</a></li>
+                <li><a href="#portfolio" class="nav-link" data-i18n="nav-work">Work</a></li>
+                <li><a href="#contact" class="nav-link contact-btn" data-i18n="nav-contact">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </li>
+                <li>
+                    <button id="lang-toggle" class="lang-toggle" aria-label="Switch Language">
+                        AR
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
+            <div class="hero-grid"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-grid-layout">
+                <div class="hero-text">
+                    <h2 class="animate-up" data-i18n="hero-subtitle">Graphic Designer</h2>
+                    <h1 class="animate-up delay-100" data-i18n="hero-title">Designing Experiences,<br> Not Just Visuals.</h1>
+                    <p class="animate-up delay-200" data-i18n="hero-desc">Creative graphic designer crafting visually compelling narratives with precision and passion. I transform concepts into impactful realities.</p>
+                    <div class="hero-btns animate-up delay-300">
+                        <a href="#portfolio" class="btn btn-primary" data-i18n="hero-btn-work">View My Work</a>
+                        <a href="#contact" class="btn btn-outline" data-i18n="hero-btn-contact">Let's Talk</a>
+                    </div>
+                </div>
+                <div class="hero-visual animate-up delay-200" id="hero-character-stage">
+                    <div class="character-aura"></div>
+                    <div class="image-wrapper character-card" id="character-card">
+                        <div class="character-speech-bubble" id="character-bubble">
+                            <span id="character-speech-text" data-i18n="character-speech">أهلاً بك في معرض أعمالي! 👋</span>
+                        </div>
+                        <img src="assets/character_avatar.png" alt="Abdelrahman Ahmed - Creative Avatar" class="profile-img character-avatar-img">
+                    </div>
+                    <!-- Animated Floating Adobe Program Badges -->
+                    <div class="adobe-badge badge-ps" title="Adobe Photoshop">Ps</div>
+                    <div class="adobe-badge badge-ai" title="Adobe Illustrator">Ai</div>
+                    <div class="adobe-badge badge-ae" title="Adobe After Effects">Ae</div>
+                    <div class="adobe-badge badge-pr" title="Adobe Premiere Pro">Pr</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-down">
+            <!-- Mouse scroll animation -->
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about section-padding">
+        <div class="container about-grid">
+            <div class="about-creative reveal-left">
+                <div class="creative-name-container">
+                    <h2 class="huge-text" data-i18n="about-huge-firstname">Abdel<br>rahman</h2>
+                    <h2 class="huge-text stroke-text" data-i18n="about-huge-lastname">Ahmed</h2>
+                    <div class="decorative-line"></div>
+                </div>
+            </div>
+            <div class="about-text reveal-right">
+                <span class="section-subtitle" data-i18n="about-subtitle">Who I Am</span>
+                <h2 class="section-title" data-i18n="about-title">Driven by Precision & Passion</h2>
+                <p data-i18n="about-desc-1">I am a visual storyteller with a relentless drive for creative excellence. With over a year of hands-on experience, I don't just design; I solve problems visually. My approach fuses artistic intuition with technical mastery, ensuring every pixel serves a purpose.</p>
+                <p data-i18n="about-desc-2">From strong conceptual foundations to the final polished export, I prioritize client goals and aesthetic harmony above all. I work across multiple disciplines, believing that versatility is key to modern design.</p>
+ 
+                <div class="skills-wrapper">
+                    <h3 data-i18n="about-skills-title">Technical Arsenal</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item" data-i18n="skill-ps"><i class="fa-solid fa-paintbrush"></i> Photoshop</div>
+                        <div class="skill-item" data-i18n="skill-ai"><i class="fa-solid fa-vector-square"></i> Illustrator</div>
+                        <div class="skill-item" data-i18n="skill-id"><i class="fa-solid fa-book-open"></i> InDesign</div>
+                        <div class="skill-item" data-i18n="skill-pr"><i class="fa-solid fa-video"></i> Premiere Pro</div>
+                        <div class="skill-item" data-i18n="skill-ae"><i class="fa-solid fa-film"></i> After Effects</div>
+                        <div class="skill-item" data-i18n="skill-ch"><i class="fa-solid fa-mask"></i> Character Animator</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services section-padding">
+        <div class="container">
+            <div class="section-header center-text">
+                <span class="section-subtitle" data-i18n="services-subtitle">What I Do</span>
+                <h2 class="section-title" data-i18n="services-title">Design Solutions</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal-up">
+                    <div class="icon-box"><i class="fa-solid fa-hashtag"></i></div>
+                    <h3 data-i18n="service-1-title">Social Media Design</h3>
+                    <p data-i18n="service-1-desc">Engaging visuals designed to capture attention and drive audience interaction across all platforms.</p>
+                </div>
+                <div class="service-card reveal-up delay-100">
+                    <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
+                    <h3 data-i18n="service-2-title">Visual Identity</h3>
+                    <p data-i18n="service-2-desc">Cohesive visual systems and post designs that define and elevate your brand's unique voice.</p>
+                </div>
+                <div class="service-card reveal-up delay-200">
+                    <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h3 data-i18n="service-3-title">Photo Manipulation</h3>
+                    <p data-i18n="service-3-desc">High-end retouching, color correction, and surreal composition for professional-grade imagery.</p>
+                </div>
+                <div class="service-card reveal-up delay-300">
+                    <div class="icon-box"><i class="fa-solid fa-play"></i></div>
+                    <h3 data-i18n="service-4-title">Motion Graphics</h3>
+                    <p data-i18n="service-4-desc">Bringing static ideas to life with dynamic motion, video editing, and visual storytelling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section-padding">
+        <div class="container">
+            <div class="section-header center-text">
+                <span class="section-subtitle" data-i18n="portfolio-subtitle">My Work</span>
+                <h2 class="section-title" data-i18n="portfolio-title">Selected Projects</h2>
+            </div>
+ 
+            <div class="portfolio-grid">
+                <!-- Project 1 -->
+                <article class="project-card reveal-up">
+                    <div class="project-image">
+                        <img src="assets/project1.png" alt="Social Media Campaign">
+                        <div class="project-overlay">
+                            <a href="#" class="view-project-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 data-i18n="project-1-title">Social Media Campaign</h3>
+                        <p class="project-cat" data-i18n="project-1-cat">Branding / Social</p>
+                        <p class="project-desc" data-i18n="project-1-desc">A strategic social media visual suite designed to maximize engagement and brand consistency.</p>
+                    </div>
+                </article>
+ 
+                <!-- Project 2 -->
+                <article class="project-card reveal-up delay-100">
+                    <div class="project-image">
+                        <img src="assets/project2.png" alt="Post & Visual Content">
+                        <div class="project-overlay">
+                            <a href="#" class="view-project-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 data-i18n="project-2-title">Visual Content Design</h3>
+                        <p class="project-cat" data-i18n="project-2-cat">Print / Digital</p>
+                        <p class="project-desc" data-i18n="project-2-desc">Clean, clear, and consistency-focused designs that establish a strong visual identity.</p>
+                    </div>
+                </article>
+ 
+                <!-- Project 3 -->
+                <article class="project-card reveal-up delay-200">
+                    <div class="project-image">
+                        <img src="assets/project3.png" alt="Photo Manipulation">
+                        <div class="project-overlay">
+                            <a href="#" class="view-project-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 data-i18n="project-3-title">Surreal Manipulation</h3>
+                        <p class="project-cat" data-i18n="project-3-cat">Art Direction / Editing</p>
+                        <p class="project-desc" data-i18n="project-3-desc">Complex photo manipulation showcasing enhanced realism, detail, and artistic flair.</p>
+                    </div>
+                </article>
+ 
+                <!-- Project 4 -->
+                <article class="project-card reveal-up delay-300">
+                    <div class="project-image">
+                        <img src="assets/project4.png" alt="Personal Creative Project">
+                        <div class="project-overlay">
+                            <a href="#" class="view-project-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 data-i18n="project-4-title">Experimental Art</h3>
+                        <p class="project-cat" data-i18n="project-4-cat">3D / Typography</p>
+                        <p class="project-desc" data-i18n="project-4-desc">Self-initiated exploration of new styles, ideas, and design techniques.</p>
+                    </div>
+                </article>
+ 
+                <!-- Project 5: Character Animation -->
+                <article class="project-card reveal-up delay-300">
+                    <div class="project-image">
+                        <img src="assets/character_animator_project.png" alt="Character Animator Workflow">
+                        <div class="project-overlay">
+                            <a href="#" class="view-project-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3 data-i18n="project-5-title">Character Animation</h3>
+                        <p class="project-cat" data-i18n="project-5-cat">Motion / Rigging</p>
+                        <p class="project-desc" data-i18n="project-5-desc">Real-time 2D character puppetry and rigging using Adobe Character Animator for dynamic storytelling.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience / Timeline Section -->
+    <section class="experience section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-i18n="experience-subtitle">Career Path</span>
+                <h2 class="section-title" data-i18n="experience-title">Experience</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal-left">
+                    <div class="timeline-date" data-i18n="exp-1-date">2023 - Present</div>
+                    <div class="timeline-content">
+                        <h3 data-i18n="exp-1-title">Freelance Graphic Designer</h3>
+                        <p data-i18n="exp-1-desc">Delivering tailored design solutions for diverse local clients. I balance precision and efficiency to meet strict deadlines while maintaining high client satisfaction.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal-left delay-100">
+                    <div class="timeline-date" data-i18n="exp-2-date">2022 - 2023</div>
+                    <div class="timeline-content">
+                        <h3 data-i18n="exp-2-title">Skill Development</h3>
+                        <p data-i18n="exp-2-desc">Intensive self-directed learning and practical application of Adobe Creative Suite, focusing on mastering visual communication principles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Contact Section -->
+    <section id="contact" class="contact section-padding">
+        <div class="container">
+            <div class="contact-box reveal-up">
+                <h2 data-i18n="contact-title">Let's Create Together</h2>
+                <p data-i18n="contact-desc">Ready to elevate your visual identity? I’m currently available for freelance projects.</p>                <div class="contact-links">
+                    <a href="mailto:abdoshaparo@gmail.com" class="btn btn-primary"><i class="fa-solid fa-envelope"></i>
+                        <span data-i18n="contact-btn-email">Email Me</span></a>
+                    
+                    <!-- Social Links -->
+                    <a href="tel:+201148303848" class="social-icon" title="Call Me"><i class="fa-solid fa-phone"></i></a>
+                    <a href="https://wa.me/201148303848" class="social-icon" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.linkedin.com/in/abdo-shaparo-a815b7394" class="social-icon" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/shaparo__1430?igsh=MWp5aWQ2OGk1b3k0ZQ==" class="social-icon" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><span data-i18n="footer-rights">&copy; 2025 Abdelrahman Ahmed. All Rights Reserved.</span></p>
+            <p class="footer-note"><span data-i18n="footer-built">Designed & Built with</span> <i class="fa-solid fa-heart"></i></p>
+        </div>
+    </footer>
+ 
+    <script src="script.js"></script>
+</body>
+
+</html>
