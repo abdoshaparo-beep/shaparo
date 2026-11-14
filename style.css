@@ -144,7 +144,10 @@ p {
 
 /* Buttons */
 .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
     padding: 0.8rem 2rem;
     border-radius: 50px;
     font-weight: 600;
@@ -155,6 +158,14 @@ p {
     position: relative;
     overflow: hidden;
     z-index: 1;
+}
+
+.hero-btns {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
 }
 
 .btn-primary {
@@ -190,7 +201,6 @@ p {
     background: transparent;
     border: 2px solid var(--border-hover);
     color: var(--text-primary);
-    margin-left: 1rem;
 }
 
 .btn-outline:hover {
@@ -307,6 +317,19 @@ p {
     position: relative;
     overflow: hidden;
     padding-top: 80px;
+}
+
+/* Smooth Gradient Fade at Bottom of Hero */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(to bottom, transparent 0%, var(--bg-color) 100%);
+    pointer-events: none;
+    z-index: 3;
 }
 
 .hero-bg {
@@ -439,9 +462,9 @@ p {
     width: 380px;
     height: 480px;
     border-radius: 28px;
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), var(--surface-color);
-    border: 1px solid var(--border-color);
-    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.3), 0 0 35px var(--accent-glow);
+    background: radial-gradient(circle at 50% 20%, #ffffff 0%, #f1f4ff 50%, #e2e8fc 100%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 20px 45px -10px rgba(59, 130, 246, 0.2), 0 0 35px var(--accent-glow);
     overflow: visible;
     transform-style: preserve-3d;
     transition: box-shadow var(--transition-smooth), transform 0.25s ease-out;
@@ -450,6 +473,12 @@ p {
     display: flex;
     align-items: flex-end;
     justify-content: center;
+}
+
+.dark-mode .image-wrapper {
+    background: radial-gradient(circle at 50% 25%, #1b2035 0%, #111422 60%, #0a0c16 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.5), 0 0 35px var(--accent-glow);
 }
 
 .image-wrapper:hover {
@@ -469,6 +498,8 @@ p {
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     animation: avatar-float 5s ease-in-out infinite;
     pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 80%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
 }
 
 @keyframes avatar-float {
@@ -736,6 +767,7 @@ p {
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.7;
+    z-index: 10;
 }
 
 .mouse {
@@ -1188,7 +1220,8 @@ footer {
 
     .hero {
         padding-top: 100px;
-        /* More space for navbar */
+        padding-bottom: 90px;
+        /* More space for navbar & smooth gradient fade */
         height: auto;
         min-height: 100vh;
     }
@@ -1355,60 +1388,154 @@ footer {
 
 /* RTL Layout Direction Overrides */
 html[dir="rtl"] {
+    --font-heading: 'Cairo', 'Outfit', sans-serif;
+    --font-body: 'Cairo', 'Inter', sans-serif;
+    font-family: var(--font-body);
     text-align: right;
 }
-html[dir="rtl"] .logo {
-    flex-direction: row-reverse;
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] .section-subtitle,
+html[dir="rtl"] .logo,
+html[dir="rtl"] .btn,
+html[dir="rtl"] .huge-text {
+    letter-spacing: 0;
 }
-html[dir="rtl"] .nav-menu {
-    flex-direction: row-reverse;
-}
-html[dir="rtl"] .btn-outline {
-    margin-left: 0;
-    margin-right: 1rem;
-}
-html[dir="rtl"] .about-creative {
-    order: 2;
-}
-html[dir="rtl"] .about-text {
-    order: 1;
+
+html[dir="rtl"] .hero-text {
     text-align: right;
 }
-html[dir="rtl"] .skills-grid {
-    flex-direction: row-reverse;
+
+html[dir="rtl"] .hero-text p {
+    line-height: 1.8;
+}
+
+html[dir="rtl"] .hero-btns {
     justify-content: flex-start;
 }
+
+html[dir="rtl"] .nav-link::after {
+    left: auto;
+    right: 0;
+}
+
+html[dir="rtl"] .about-text {
+    text-align: right;
+}
+
+html[dir="rtl"] .about-text p {
+    line-height: 1.8;
+}
+
+html[dir="rtl"] .creative-name-container {
+    text-align: right;
+    line-height: 1.15;
+}
+
+html[dir="rtl"] .huge-text {
+    font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+    letter-spacing: 0;
+}
+
+html[dir="rtl"] .stroke-text {
+    left: auto;
+    right: 25px;
+    -webkit-text-stroke: 1.5px var(--accent-primary);
+}
+
+html[dir="rtl"] .decorative-line {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+html[dir="rtl"] .skills-grid {
+    justify-content: flex-start;
+}
+
 html[dir="rtl"] .timeline::before {
     left: auto;
     right: 20px;
 }
+
 html[dir="rtl"] .timeline-item {
     padding-left: 0;
     padding-right: 60px;
     text-align: right;
 }
+
 html[dir="rtl"] .timeline-item::before {
     left: auto;
     right: 11px;
 }
 
+html[dir="rtl"] .project-info {
+    text-align: right;
+}
+
+html[dir="rtl"] .project-desc {
+    line-height: 1.7;
+}
+
+html[dir="rtl"] .service-card {
+    text-align: right;
+}
+
+html[dir="rtl"] .service-card p {
+    line-height: 1.7;
+}
+
 @media (max-width: 768px) {
+    html[dir="rtl"] .hero-text {
+        text-align: center;
+    }
+
+    html[dir="rtl"] .hero-btns {
+        justify-content: center;
+    }
+
+    html[dir="rtl"] .creative-name-container {
+        text-align: center;
+    }
+
+    html[dir="rtl"] .stroke-text {
+        right: 0;
+    }
+
+    html[dir="rtl"] .decorative-line {
+        margin: 2rem auto 0;
+    }
+
+    html[dir="rtl"] .about-text {
+        text-align: center;
+    }
+
+    html[dir="rtl"] .skills-grid {
+        justify-content: center;
+    }
+
     html[dir="rtl"] .timeline::before {
         left: auto;
         right: 10px;
     }
+
     html[dir="rtl"] .timeline-item {
         padding-left: 0;
         padding-right: 40px;
     }
+
     html[dir="rtl"] .timeline-item::before {
         left: auto;
         right: 1px;
     }
+
     html[dir="rtl"] .nav-menu {
         right: auto;
         left: -100%;
     }
+
     html[dir="rtl"] .nav-menu.active {
         left: 0;
         right: auto;
