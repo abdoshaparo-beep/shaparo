@@ -11,6 +11,7 @@ const translations = {
         'hero-desc': 'Creative graphic designer crafting visually compelling narratives with precision and passion. I transform concepts into impactful realities.',
         'hero-btn-work': 'View My Work',
         'hero-btn-contact': "Let's Talk",
+        'character-speech': 'Welcome to my portfolio! 👋',
         'about-huge-firstname': 'Abdel<br>rahman',
         'about-huge-lastname': 'Ahmed',
         'about-subtitle': 'Who I Am',
@@ -76,6 +77,7 @@ const translations = {
         'hero-desc': 'مصمم جرافيك مبتكر يصيغ قصصًا بصرية مقنعة بدقة وشغف. أحول المفاهيم الإبداعية إلى واقع ملموس ومؤثر.',
         'hero-btn-work': 'عرض أعمالي',
         'hero-btn-contact': 'لنبدأ التحدث',
+        'character-speech': 'أهلاً بك في معرض أعمالي! 👋',
         'about-huge-firstname': 'عبدالرحمن',
         'about-huge-lastname': 'أحمد',
         'about-subtitle': 'من أكون',
@@ -321,3 +323,93 @@ badges.forEach(badge => {
         document.removeEventListener('touchend', dragEnd);
     }
 });
+
+/* ----------------------------------------------------
+   INTERACTIVE AVATAR: 3D PARALLAX & SPEECH BUBBLE
+   ---------------------------------------------------- */
+const characterCard = document.getElementById('character-card');
+const heroVisual = document.getElementById('hero-character-stage');
+const characterBubble = document.getElementById('character-bubble');
+const characterSpeechText = document.getElementById('character-speech-text');
+
+if (characterCard && heroVisual) {
+    // 3D Parallax Tilt Effect
+    let bounds;
+    function rotateToMouse(e) {
+        bounds = heroVisual.getBoundingClientRect();
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        const leftX = mouseX - bounds.x;
+        const topY = mouseY - bounds.y;
+        const center = {
+            x: leftX - bounds.width / 2,
+            y: topY - bounds.height / 2
+        };
+
+        const distance = Math.sqrt(center.x ** 2 + center.y ** 2);
+        const maxDist = Math.max(bounds.width, bounds.height);
+        
+        // Tilt limits
+        const tiltX = (center.y / (bounds.height / 2)) * -14;
+        const tiltY = (center.x / (bounds.width / 2)) * 14;
+
+        characterCard.style.transform = `
+            perspective(1000px)
+            rotateX(${tiltX}deg)
+            rotateY(${tiltY}deg)
+            scale3d(1.02, 1.02, 1.02)
+        `;
+    }
+
+    heroVisual.addEventListener('mousemove', rotateToMouse);
+    heroVisual.addEventListener('mouseleave', () => {
+        characterCard.style.transform = `
+            perspective(1000px)
+            rotateX(0deg)
+            rotateY(0deg)
+            scale3d(1, 1, 1)
+        `;
+    });
+
+    // Character Speech Dialogues
+    const dialoguePool = {
+        ar: [
+            "أهلاً بك في معرض أعمالي! 👋",
+            "جاهز نحول أفكارك لتصميمات إبداعية؟ 🚀",
+            "جرب تسحب أيقونات أدوبي اللي بتطير حولي! ✨",
+            "Photoshop & Illustrator هما ملعبي المفضل! 🎨",
+            "كل بيكسل هنا معمول بشغف ودقة! 💡"
+        ],
+        en: [
+            "Welcome to my creative portfolio! 👋",
+            "Ready to bring your ideas to life? 🚀",
+            "Try dragging the Adobe badges floating around! ✨",
+            "Photoshop & Illustrator are my creative playground! 🎨",
+            "Every pixel is crafted with precision & passion! 💡"
+        ]
+    };
+
+    let dialogueIndex = 0;
+    let bubbleTimeout = null;
+
+    characterCard.addEventListener('click', (e) => {
+        // Prevent speech bubble trigger if user was dragging a badge
+        if (e.target.classList.contains('adobe-badge')) return;
+
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        const list = dialoguePool[currentLang] || dialoguePool.en;
+
+        dialogueIndex = (dialogueIndex + 1) % list.length;
+        if (characterSpeechText) {
+            characterSpeechText.textContent = list[dialogueIndex];
+        }
+
+        if (characterBubble) {
+            characterBubble.classList.add('active');
+            clearTimeout(bubbleTimeout);
+            bubbleTimeout = setTimeout(() => {
+                characterBubble.classList.remove('active');
+            }, 3500);
+        }
+    });
+}
