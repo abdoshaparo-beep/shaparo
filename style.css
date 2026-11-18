@@ -31,25 +31,25 @@
 }
 
 .dark-mode {
-    /* Dark Mode (Secondary) */
-    --bg-color: #050505;
-    --surface-color: #121212;
-    --surface-hover: #1e1e1e;
+    /* Cosmic Space Dark Theme */
+    --bg-color: #030307;
+    --surface-color: rgba(14, 17, 28, 0.7);
+    --surface-hover: rgba(25, 30, 48, 0.85);
     --text-primary: #ffffff;
-    --text-secondary: #a3a3a3;
-    --accent-primary: #3b82f6;
-    --accent-secondary: #8b5cf6;
-    --accent-glow: rgba(59, 130, 246, 0.5);
+    --text-secondary: #94a3b8;
+    --accent-primary: #38bdf8;
+    --accent-secondary: #a855f7;
+    --accent-glow: rgba(56, 189, 248, 0.45);
 
-    --border-color: rgba(255, 255, 255, 0.05);
-    --border-hover: rgba(255, 255, 255, 0.2);
-    --title-gradient: linear-gradient(to right, #fff, #a3a3a3);
-    --hero-p-color: #e5e5e5;
-    --glass-bg: rgba(5, 5, 5, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(56, 189, 248, 0.35);
+    --title-gradient: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
+    --hero-p-color: #cbd5e1;
+    --glass-bg: rgba(3, 3, 7, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.08);
 
-    --hero-gradient-start: rgba(20, 20, 40, 1);
-    --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    --hero-gradient-start: rgba(20, 20, 45, 0.3);
+    --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -63,12 +63,31 @@ html {
     font-size: 16px;
 }
 
-body {
+/* 3D Cosmic Space Animated Canvas */
+#space-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10;
+    pointer-events: none;
+    display: block;
     background-color: var(--bg-color);
+    transition: background-color var(--transition-fast);
+}
+
+body {
+    background-color: transparent;
     color: var(--text-primary);
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: color var(--transition-fast);
+}
+
+body.dark-mode {
+    background-color: transparent;
 }
 
 a {
@@ -341,6 +360,22 @@ p {
     z-index: -1;
     background: radial-gradient(circle at 15% 50%, var(--hero-gradient-start), var(--bg-color));
     overflow: hidden;
+}
+
+.dark-mode .hero-bg {
+    background: transparent;
+}
+
+.dark-mode .hero-shape {
+    opacity: 0.15;
+}
+
+.dark-mode .hero-grid {
+    opacity: 0.05;
+}
+
+.dark-mode .hero::after {
+    background: linear-gradient(to bottom, transparent 0%, rgba(3, 3, 7, 0.3) 100%);
 }
 
 .hero-shape {
@@ -916,22 +951,26 @@ p {
 }
 
 .service-card .icon-box {
-    width: 60px;
-    height: 60px;
-    background: rgba(59, 130, 246, 0.1);
-    border-radius: 12px;
+    width: 62px;
+    height: 62px;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.8rem;
     color: var(--accent-primary);
     margin-bottom: 1.5rem;
-    transition: var(--transition-fast);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.12);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .service-card:hover .icon-box {
     background: var(--accent-primary);
     color: white;
+    transform: scale(1.1) rotate(6deg);
+    box-shadow: 0 10px 25px var(--accent-glow);
 }
 
 .service-card h3 {
@@ -1114,43 +1153,175 @@ p {
     margin: 0 auto 2.5rem;
 }
 
+/* Contact Section Links & Social Icons */
 .contact-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.contact-cta {
+    padding: 0.9rem 2.6rem;
+    font-size: 1.05rem;
+    border-radius: 50px;
+    box-shadow: 0 8px 25px var(--accent-glow);
+    transition: all var(--transition-fast);
+}
+
+.contact-cta:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 32px var(--accent-glow);
+}
+
+.social-icons-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
+    flex-wrap: wrap;
 }
 
 .social-icon {
-    width: 50px;
-    height: 50px;
-    border: 1px solid var(--border-hover);
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     color: var(--text-primary);
-    transition: var(--transition-fast);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon i {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .social-icon:hover {
-    background: var(--text-primary);
-    color: var(--bg-color);
-    transform: translateY(-3px);
+    transform: translateY(-6px) scale(1.12);
 }
 
-/* Footer */
+.social-icon:hover i {
+    transform: scale(1.2) rotate(4deg);
+}
+
+/* Individual Brand Themes with Glowing Neon Reflections */
+.social-icon.icon-facebook:hover {
+    background: #1877f2;
+    border-color: #1877f2;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(24, 119, 242, 0.5), 0 0 20px rgba(24, 119, 242, 0.35);
+}
+
+.social-icon.icon-whatsapp:hover {
+    background: #25d366;
+    border-color: #25d366;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5), 0 0 20px rgba(37, 211, 102, 0.35);
+}
+
+.social-icon.icon-instagram:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-color: transparent;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(220, 39, 67, 0.5), 0 0 20px rgba(188, 24, 136, 0.35);
+}
+
+.social-icon.icon-linkedin:hover {
+    background: #0077b5;
+    border-color: #0077b5;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 119, 181, 0.5), 0 0 20px rgba(0, 119, 181, 0.35);
+}
+
+.social-icon.icon-phone:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.35);
+}
+
+/* Dark Mode Social Icons Depth */
+.dark-mode .social-icon {
+    background: rgba(18, 22, 36, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer Styling */
 footer {
-    padding: 2rem 0;
+    padding: 3rem 0 2rem;
     border-top: 1px solid var(--border-color);
     text-align: center;
     font-size: 0.9rem;
     color: var(--text-secondary);
 }
 
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.footer-socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-social-link:hover {
+    color: #ffffff;
+    transform: translateY(-4px) scale(1.12);
+}
+
+.footer-social-link[title="WhatsApp"]:hover { background: #25d366; border-color: #25d366; box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45); }
+.footer-social-link[title="Facebook"]:hover { background: #1877f2; border-color: #1877f2; box-shadow: 0 6px 18px rgba(24, 119, 242, 0.45); }
+.footer-social-link[title="Instagram"]:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); border-color: transparent; box-shadow: 0 6px 18px rgba(220, 39, 67, 0.45); }
+.footer-social-link[title="LinkedIn"]:hover { background: #0077b5; border-color: #0077b5; box-shadow: 0 6px 18px rgba(0, 119, 181, 0.45); }
+.footer-social-link[title="Call Me"]:hover { background: #3b82f6; border-color: #3b82f6; box-shadow: 0 6px 18px rgba(59, 130, 246, 0.45); }
+
+.dark-mode .footer-social-link {
+    background: rgba(18, 22, 36, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
 .footer-note i {
     color: #ef4444;
+    animation: heartBeat 1.8s infinite;
+    display: inline-block;
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.25); }
 }
 
 /* Animations */

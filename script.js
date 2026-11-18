@@ -201,16 +201,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Theme Toggle Logic
+// Theme Toggle Logic (Defaults to Cosmic Space Dark Theme)
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 const icon = themeToggle.querySelector('i');
 
 const savedTheme = localStorage.getItem('theme');
 
-if (savedTheme === 'dark') {
+// Activate dark cosmic space theme by default unless explicitly set to light
+if (savedTheme !== 'light') {
     body.classList.add('dark-mode');
     icon.classList.replace('fa-moon', 'fa-sun');
+} else {
+    body.classList.remove('dark-mode');
+    icon.classList.replace('fa-sun', 'fa-moon');
 }
 
 themeToggle.addEventListener('click', () => {
@@ -413,3 +417,322 @@ if (characterCard && heroVisual) {
         }
     });
 }
+
+/* ----------------------------------------------------
+   ADAPTIVE 3D SPACE & CONSTELLATION ENGINE
+   - Calm, comfortable, eye-friendly motion (no dizzying streaks)
+   - 95%+ pure soft white stars in Dark Mode
+   - Distinct, creative constellation & floating particles in Light Mode
+   ---------------------------------------------------- */
+(function initSpaceCanvas() {
+    const canvas = document.getElementById('space-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    // 3D Perspective & Motion Settings (Calm & soothing)
+    const FOV = 260;
+    const MAX_DEPTH = 1600;
+    const STAR_COUNT = 200;
+    const baseSpeed = 0.42; // Calm, gentle drifting (was 2.4!)
+    let currentSpeed = baseSpeed;
+    let targetSpeed = baseSpeed;
+
+    // Smooth, gentle camera parallax
+    let cx = width / 2;
+    let cy = height / 2;
+    let targetCX = width / 2;
+    let targetCY = height / 2;
+
+    // Mostly Pure White Star Palette (Eye-Friendly)
+    const starColorsDark = [
+        { r: 255, g: 255, b: 255 }, // Pure soft white
+        { r: 255, g: 255, b: 255 },
+        { r: 255, g: 255, b: 255 },
+        { r: 255, g: 255, b: 255 },
+        { r: 245, g: 248, b: 255 }  // Subtle cool crystal white
+    ];
+
+    class Star {
+        constructor() {
+            this.reset(true);
+        }
+
+        reset(initial = false) {
+            this.x = (Math.random() - 0.5) * width * 3.2;
+            this.y = (Math.random() - 0.5) * height * 3.2;
+            this.z = initial ? Math.random() * MAX_DEPTH + 10 : MAX_DEPTH;
+            this.baseSize = Math.random() * 1.2 + 0.8;
+            this.color = starColorsDark[Math.floor(Math.random() * starColorsDark.length)];
+            this.twinkleSpeed = Math.random() * 0.02 + 0.008; // Slower, softer twinkling
+            this.twinklePhase = Math.random() * Math.PI * 2;
+            
+            // Light Mode floating velocities
+            this.lx = (Math.random() - 0.5) * 0.5;
+            this.ly = (Math.random() - 0.5) * 0.5;
+            this.posX = Math.random() * width;
+            this.posY = Math.random() * height;
+        }
+
+        updateDark(speed) {
+            this.z -= speed;
+            this.twinklePhase += this.twinkleSpeed;
+
+            if (this.z <= 1) {
+                this.reset(false);
+            }
+        }
+
+        drawDark() {
+            if (this.z <= 1) return;
+
+            // 3D Perspective Projection
+            const k = FOV / this.z;
+            const sx = this.x * k + cx;
+            const sy = this.y * k + cy;
+
+            if (sx < -30 || sx > width + 30 || sy < -30 || sy > height + 30) {
+                return;
+            }
+
+            const depthRatio = 1 - this.z / MAX_DEPTH;
+            const twinkle = 0.85 + 0.15 * Math.sin(this.twinklePhase);
+            // Eye-friendly, soft opacity (no harsh glares)
+            const alpha = Math.min(0.85, Math.max(0.2, depthRatio * 1.1 * twinkle));
+            const size = Math.max(0.7, depthRatio * this.baseSize * 2.2);
+
+            // Clean, soft circular star (No harsh radial streaks!)
+            ctx.beginPath();
+            ctx.arc(sx, sy, size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${alpha})`;
+            ctx.fill();
+
+            // Very subtle, gentle soft aura for close stars
+            if (depthRatio > 0.65) {
+                ctx.beginPath();
+                ctx.arc(sx, sy, size * 2.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.12})`;
+                ctx.fill();
+            }
+        }
+
+        // Light Mode: Creative Constellation / Floating Designer Particles
+        updateLight() {
+            this.posX += this.lx;
+            this.posY += this.ly;
+
+            if (this.posX < 0) this.posX = width;
+            if (this.posX > width) this.posX = 0;
+            if (this.posY < 0) this.posY = height;
+            if (this.posY > height) this.posY = 0;
+        }
+
+        drawLight() {
+            ctx.beginPath();
+            ctx.arc(this.posX, this.posY, this.baseSize * 1.1, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(99, 102, 241, 0.35)'; // Soft creative indigo
+            ctx.fill();
+        }
+    }
+
+    // Gentle, Elegant Shooting Star (Dark Mode only)
+    class Meteor {
+        constructor() {
+            this.reset();
+        }
+
+        reset() {
+            this.active = false;
+            this.x = 0;
+            this.y = 0;
+            this.length = 0;
+            this.speed = 0;
+            this.angle = 0;
+            this.opacity = 0;
+            this.decay = 0;
+        }
+
+        spawn() {
+            this.active = true;
+            this.x = Math.random() * width * 0.7;
+            this.y = Math.random() * height * 0.3;
+            this.length = Math.random() * 80 + 60; // Shorter, softer trail
+            this.speed = Math.random() * 8 + 9;    // Gentle, smooth speed
+            this.angle = (Math.PI / 4) + (Math.random() - 0.5) * 0.2;
+            this.opacity = 0.8;
+            this.decay = Math.random() * 0.008 + 0.008; // Fades out gently
+            this.width = 1.2;
+        }
+
+        update() {
+            if (!this.active) return;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            this.opacity -= this.decay;
+
+            if (this.opacity <= 0 || this.x > width + 50 || this.y > height + 50) {
+                this.active = false;
+            }
+        }
+
+        draw() {
+            if (!this.active || this.opacity <= 0) return;
+            const tailX = this.x - Math.cos(this.angle) * this.length;
+            const tailY = this.y - Math.sin(this.angle) * this.length;
+
+            const grad = ctx.createLinearGradient(tailX, tailY, this.x, this.y);
+            grad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+            grad.addColorStop(1, `rgba(255, 255, 255, ${this.opacity * 0.7})`);
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(tailX, tailY);
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = this.width;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+
+    const stars = Array.from({ length: STAR_COUNT }, () => new Star());
+    const meteors = [new Meteor()];
+    let lastMeteorTime = Date.now();
+
+    // Very subtle, peaceful cosmic nebulae in Dark Mode
+    function drawNebulaeDark() {
+        const time = Date.now() * 0.0002;
+        const neb1X = width * 0.3 + Math.sin(time) * 40;
+        const neb1Y = height * 0.35 + Math.cos(time * 0.7) * 30;
+        const grad1 = ctx.createRadialGradient(neb1X, neb1Y, 10, neb1X, neb1Y, width * 0.55);
+        grad1.addColorStop(0, 'rgba(124, 58, 237, 0.045)');
+        grad1.addColorStop(0.6, 'rgba(79, 70, 229, 0.02)');
+        grad1.addColorStop(1, 'rgba(4, 5, 10, 0)');
+
+        ctx.fillStyle = grad1;
+        ctx.fillRect(0, 0, width, height);
+    }
+
+    // Connect close constellation particles in Light Mode
+    function drawConstellationLines() {
+        const maxDist = 85;
+        ctx.lineWidth = 0.6;
+        for (let i = 0; i < stars.length; i += 2) {
+            for (let j = i + 1; j < stars.length; j += 2) {
+                const dx = stars[i].posX - stars[j].posX;
+                const dy = stars[i].posY - stars[j].posY;
+                const dist = Math.hypot(dx, dy);
+                if (dist < maxDist) {
+                    const alpha = (1 - dist / maxDist) * 0.12;
+                    ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.moveTo(stars[i].posX, stars[i].posY);
+                    ctx.lineTo(stars[j].posX, stars[j].posY);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    // Subtle 3D Mouse Parallax (Reduced to be calm and gentle)
+    window.addEventListener('mousemove', (e) => {
+        const offsetX = (e.clientX - width / 2) / (width / 2);
+        const offsetY = (e.clientY - height / 2) / (height / 2);
+        targetCX = width / 2 + offsetX * 35; // Gentle 35px offset
+        targetCY = height / 2 + offsetY * 25;
+    });
+
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+            const touch = e.touches[0];
+            const offsetX = (touch.clientX - width / 2) / (width / 2);
+            const offsetY = (touch.clientY - height / 2) / (height / 2);
+            targetCX = width / 2 + offsetX * 20;
+            targetCY = height / 2 + offsetY * 15;
+        }
+    }, { passive: true });
+
+    // Calm Scroll Effect (Very subtle boost, no dizzying jump)
+    let lastScrollY = window.scrollY;
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        const delta = Math.abs(window.scrollY - lastScrollY);
+        lastScrollY = window.scrollY;
+        targetSpeed = baseSpeed + Math.min(delta * 0.03, 0.45);
+
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            targetSpeed = baseSpeed;
+        }, 150);
+    }, { passive: true });
+
+    // Responsive Canvas Resize
+    window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        cx = width / 2;
+        cy = height / 2;
+        targetCX = cx;
+        targetCY = cy;
+    });
+
+    // Main Animation Loop
+    function animate() {
+        const isDark = document.body.classList.contains('dark-mode');
+
+        if (isDark) {
+            // === DARK MODE: Serene, Deep Cosmos with Gentle Pure White Stars ===
+            ctx.fillStyle = '#04050a';
+            ctx.fillRect(0, 0, width, height);
+
+            // Subtle background nebula
+            drawNebulaeDark();
+
+            // Smooth camera easing
+            cx += (targetCX - cx) * 0.04;
+            cy += (targetCY - cy) * 0.04;
+            currentSpeed += (targetSpeed - currentSpeed) * 0.05;
+
+            // Render calm white 3D stars
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].updateDark(currentSpeed);
+                stars[i].drawDark();
+            }
+
+            // Rare, graceful shooting star
+            const now = Date.now();
+            if (now - lastMeteorTime > 12000 + Math.random() * 8000) {
+                const idleMeteor = meteors.find(m => !m.active);
+                if (idleMeteor) {
+                    idleMeteor.spawn();
+                    lastMeteorTime = now;
+                }
+            }
+
+            for (let i = 0; i < meteors.length; i++) {
+                meteors[i].update();
+                meteors[i].draw();
+            }
+        } else {
+            // === LIGHT MODE: Clean, Creative Floating Constellation & Stardust ===
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(0, 0, width, height);
+
+            // Connect nearby nodes with delicate lines
+            drawConstellationLines();
+
+            // Draw floating creative particles
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].updateLight();
+                stars[i].drawLight();
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+})();
