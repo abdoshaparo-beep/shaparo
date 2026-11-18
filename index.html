@@ -21,13 +21,125 @@
 </head>
 
 <body>
+    <!-- 3D Cinematic Intro Experience -->
+    <div id="shaparo-3d-intro" class="shaparo-3d-intro" role="dialog" aria-modal="true" aria-label="Introduction Screen">
+        <!-- Background 3D Canvas for Cosmic Infinity Knot & Stardust -->
+        <canvas id="intro-3d-canvas" class="intro-3d-canvas"></canvas>
+        
+        <!-- Ambient radial glow behind content -->
+        <div class="intro-ambient-glow"></div>
+
+        <!-- 3D Holographic Stage -->
+        <div class="intro-stage" id="intro-stage">
+            <!-- Top Cyber Pill Badge -->
+            <div class="intro-badge">
+                <span class="intro-badge-pulse"></span>
+                <span class="intro-badge-text" data-i18n="intro-portfolio-badge">CREATIVE PORTFOLIO ✦ 2026</span>
+            </div>
+
+            <!-- 3D Floating Infinity Centerpiece Icon -->
+            <div class="intro-infinity-center" id="intro-infinity-center">
+                <svg class="intro-infinity-svg" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="intro-inf-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8" />
+                            <stop offset="50%" stop-color="#818cf8" />
+                            <stop offset="100%" stop-color="#c084fc" />
+                        </linearGradient>
+                        <filter id="intro-inf-glow-filter" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <path class="intro-inf-track" d="M 50,25 C 40,12 30,10 21,10 C 9,10 5,18 5,25 C 5,32 9,40 21,40 C 30,40 40,38 50,25 C 60,12 70,10 79,10 C 91,10 95,18 95,25 C 95,32 91,40 79,40 C 70,40 60,38 50,25 Z" />
+                    <path class="intro-inf-beam" d="M 50,25 C 40,12 30,10 21,10 C 9,10 5,18 5,25 C 5,32 9,40 21,40 C 30,40 40,38 50,25 C 60,12 70,10 79,10 C 91,10 95,18 95,25 C 95,32 91,40 79,40 C 70,40 60,38 50,25 Z" />
+                </svg>
+                <div class="intro-center-orb"></div>
+            </div>
+
+            <!-- 3D Layered Extruded Title -->
+            <div class="intro-title-box">
+                <div class="intro-name-3d" id="intro-name-3d" data-text="SHAPARO">
+                    <span class="n3d-layer n3d-shadow">SHAPARO</span>
+                    <span class="n3d-layer n3d-ext-3">SHAPARO</span>
+                    <span class="n3d-layer n3d-ext-2">SHAPARO</span>
+                    <span class="n3d-layer n3d-ext-1">SHAPARO</span>
+                    <span class="n3d-layer n3d-front">SHAPARO</span>
+                    <span class="n3d-layer n3d-sheen">SHAPARO</span>
+                </div>
+            </div>
+
+            <!-- Subtitle and Designer Name -->
+            <div class="intro-sub-block">
+                <h2 class="intro-personal-name" data-i18n="intro-designer-name">ABDELRAHMAN AHMED</h2>
+                <div class="intro-tags">
+                    <span class="intro-tag" data-i18n="intro-role-1">Graphic Designer</span>
+                    <span class="intro-tag-sep">✦</span>
+                    <span class="intro-tag" data-i18n="intro-role-2">Visual Artist</span>
+                    <span class="intro-tag-sep">✦</span>
+                    <span class="intro-tag" data-i18n="intro-role-3">Motion & Branding</span>
+                </div>
+            </div>
+
+            <!-- Explore Button -->
+            <div class="intro-cta-wrapper">
+                <button class="intro-enter-btn" id="intro-enter-btn" aria-label="Explore Portfolio">
+                    <span class="btn-shine"></span>
+                    <span class="btn-caption" data-i18n="intro-enter-btn">Explore Portfolio</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Corner Skip Control with Circular Progress -->
+        <button class="intro-skip-btn" id="intro-skip-btn" aria-label="Skip Intro" title="Skip Intro">
+            <svg class="skip-ring-svg" viewBox="0 0 40 40">
+                <circle class="skip-ring-bg" cx="20" cy="20" r="16" />
+                <circle class="skip-ring-fill" id="skip-ring-fill" cx="20" cy="20" r="16" />
+            </svg>
+            <span class="skip-text" data-i18n="intro-skip">Skip</span>
+            <i class="fa-solid fa-forward"></i>
+        </button>
+    </div>
+
     <!-- 3D Cosmic Space Animated Canvas Background -->
     <canvas id="space-canvas"></canvas>
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="#" class="logo"><i class="fa-solid fa-infinity"></i> Shaparo</a>
+            <a href="#home" class="logo brand-logo" id="brand-logo" title="Shaparo | Abdelrahman Ahmed">
+                <div class="navbar-infinity-wrapper" id="navbar-infinity-badge">
+                    <svg class="navbar-infinity-svg" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="nav-inf-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="50%" stop-color="#818cf8" />
+                                <stop offset="100%" stop-color="#c084fc" />
+                            </linearGradient>
+                            <filter id="nav-inf-glow" x="-25%" y="-25%" width="150%" height="150%">
+                                <feGaussianBlur stdDeviation="1.5" result="glow"/>
+                                <feMerge>
+                                    <feMergeNode in="glow"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <!-- Passive outline track -->
+                        <path class="nav-inf-track" d="M 30,15 C 24,7 18,6 13,6 C 5.5,6 3.5,11 3.5,15 C 3.5,19 5.5,24 13,24 C 18,24 24,23 30,15 C 36,7 42,6 47,6 C 54.5,6 56.5,11 56.5,15 C 56.5,19 54.5,24 47,24 C 42,24 36,23 30,15 Z" />
+                        <!-- Flowing neon laser beam -->
+                        <path class="nav-inf-pulse" d="M 30,15 C 24,7 18,6 13,6 C 5.5,6 3.5,11 3.5,15 C 3.5,19 5.5,24 13,24 C 18,24 24,23 30,15 Z" />
+                    </svg>
+                    <span class="nav-inf-spark"></span>
+                </div>
+                <div class="logo-name-group">
+                    <span class="logo-text-main">Shaparo</span>
+                    <span class="logo-text-sub" data-i18n="logo-sub">Design</span>
+                </div>
+            </a>
             <div class="menu-toggle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -39,6 +151,11 @@
                 <li><a href="#services" class="nav-link" data-i18n="nav-services">Services</a></li>
                 <li><a href="#portfolio" class="nav-link" data-i18n="nav-work">Work</a></li>
                 <li><a href="#contact" class="nav-link contact-btn" data-i18n="nav-contact">Contact</a></li>
+                <li>
+                    <button id="intro-replay-btn" class="intro-replay-btn" aria-label="Replay 3D Intro" title="Replay 3D Intro">
+                        <i class="fa-solid fa-cube"></i>
+                    </button>
+                </li>
                 <li>
                     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">
                         <i class="fa-solid fa-moon"></i>
@@ -64,10 +181,14 @@
         <div class="container hero-content">
             <div class="hero-grid-layout">
                 <div class="hero-text">
-                    <h2 class="animate-up" data-i18n="hero-subtitle">Graphic Designer</h2>
-                    <h1 class="animate-up delay-100" data-i18n="hero-title">Designing Experiences,<br> Not Just Visuals.</h1>
-                    <p class="animate-up delay-200" data-i18n="hero-desc">Creative graphic designer crafting visually compelling narratives with precision and passion. I transform concepts into impactful realities.</p>
-                    <div class="hero-btns animate-up delay-300">
+                    <div class="hero-brand-badge animate-up">
+                        <span class="badge-inf-icon"><i class="fa-solid fa-infinity"></i></span>
+                        <span class="badge-brand-title">SHAPARO ✦ STUDIO</span>
+                    </div>
+                    <h2 class="animate-up delay-100" data-i18n="hero-subtitle">Graphic Designer</h2>
+                    <h1 class="animate-up delay-200" data-i18n="hero-title">Designing Experiences,<br> Not Just Visuals.</h1>
+                    <p class="animate-up delay-300" data-i18n="hero-desc">Creative graphic designer crafting visually compelling narratives with precision and passion. I transform concepts into impactful realities.</p>
+                    <div class="hero-btns animate-up delay-400">
                         <a href="#portfolio" class="btn btn-primary" data-i18n="hero-btn-work">View My Work</a>
                         <a href="#contact" class="btn btn-outline" data-i18n="hero-btn-contact">Let's Talk</a>
                     </div>
@@ -318,7 +439,7 @@
                 <a href="https://www.linkedin.com/in/abdo-shaparo-a815b7394" class="footer-social-link" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
                 <a href="tel:+201148303848" class="footer-social-link" title="Call Me"><i class="fa-solid fa-phone"></i></a>
             </div>
-            <p><span data-i18n="footer-rights">&copy; 2025 Abdelrahman Ahmed. All Rights Reserved.</span></p>
+            <p><span data-i18n="footer-rights">&copy; 2026 Abdelrahman Ahmed. All Rights Reserved.</span></p>
             <p class="footer-note"><span data-i18n="footer-built">Designed & Built with</span> <i class="fa-solid fa-heart"></i></p>
         </div>
     </footer>

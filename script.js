@@ -63,8 +63,16 @@ const translations = {
         'contact-title': "Let's Create Together",
         'contact-desc': 'Ready to elevate your visual identity? I’m currently available for freelance projects.',
         'contact-btn-email': 'Email Me',
-        'footer-rights': '© 2025 Abdelrahman Ahmed. All Rights Reserved.',
-        'footer-built': 'Designed & Built with'
+        'footer-rights': '© 2026 Abdelrahman Ahmed. All Rights Reserved.',
+        'footer-built': 'Designed & Built with',
+        'intro-portfolio-badge': 'CREATIVE PORTFOLIO ✦ 2026',
+        'intro-designer-name': 'ABDELRAHMAN AHMED',
+        'intro-role-1': 'Graphic Designer',
+        'intro-role-2': 'Visual Artist',
+        'intro-role-3': 'Motion & Branding',
+        'intro-enter-btn': 'Explore Portfolio',
+        'intro-skip': 'Skip',
+        'logo-sub': 'Design'
     },
     ar: {
         'nav-home': 'الرئيسية',
@@ -129,8 +137,16 @@ const translations = {
         'contact-title': 'لنصنع شيئاً رائعاً معاً',
         'contact-desc': 'هل أنت جاهز للارتقاء بهويتك البصرية؟ أنا متاح حالياً للمشاريع المستقلة.',
         'contact-btn-email': 'راسلني بريدياً',
-        'footer-rights': 'جميع الحقوق محفوظة © ٢٠٢٥ عبدالرحمن أحمد.',
-        'footer-built': 'تم التصميم والبرمجة بكل حب'
+        'footer-rights': 'جميع الحقوق محفوظة © ٢٠٢٦ عبدالرحمن أحمد.',
+        'footer-built': 'تم التصميم والبرمجة بكل حب',
+        'intro-portfolio-badge': 'معرض الأعمال الإبداعي ✦ ٢٠٢٦',
+        'intro-designer-name': 'عبدالرحمن أحمد',
+        'intro-role-1': 'مصمم جرافيك',
+        'intro-role-2': 'فنان بصري',
+        'intro-role-3': 'موشن وهوية بصرية',
+        'intro-enter-btn': 'استكشف المعرض',
+        'intro-skip': 'تخطي',
+        'logo-sub': 'تصميم'
     }
 };
 
@@ -736,3 +752,438 @@ if (characterCard && heroVisual) {
 
     requestAnimationFrame(animate);
 })();
+
+/* ====================================================
+   3D CINEMATIC INTRO & CREATIVE INFINITY ANIMATION
+   ==================================================== */
+(function init3DIntroAndLogo() {
+    const introOverlay = document.getElementById('shaparo-3d-intro');
+    const canvas = document.getElementById('intro-3d-canvas');
+    if (!introOverlay || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const introStage = document.getElementById('intro-stage');
+    const enterBtn = document.getElementById('intro-enter-btn');
+    const skipBtn = document.getElementById('intro-skip-btn');
+    const skipRingFill = document.getElementById('skip-ring-fill');
+    const navbarInfinityBadge = document.getElementById('navbar-infinity-badge');
+    const introReplayBtn = document.getElementById('intro-replay-btn');
+    const brandLogo = document.getElementById('brand-logo');
+
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let animId = null;
+    let isIntroActive = true;
+    let introStartTime = Date.now();
+    const INTRO_DURATION_MS = 2700; // 2.7 seconds auto showcase (reduced by 1.5s)
+
+    // Lock body scroll during intro
+    document.body.style.overflow = 'hidden';
+
+    // 3D Engine Variables
+    let rotX = 0.2;
+    let rotY = 0;
+    let rotZ = 0.1;
+    let targetRotX = 0;
+    let targetRotY = 0;
+
+    // Mouse coordinates relative to center (-1 to +1)
+    let mouseNormX = 0;
+    let mouseNormY = 0;
+
+    function resizeCanvas() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+    });
+    resizeCanvas();
+
+    // Mouse & Touch 3D Tilt interaction
+    window.addEventListener('mousemove', (e) => {
+        if (!isIntroActive) return;
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        mouseNormX = (e.clientX - cx) / cx;
+        mouseNormY = (e.clientY - cy) / cy;
+
+        targetRotY = mouseNormX * 0.45;
+        targetRotX = -mouseNormY * 0.35;
+
+        if (introStage) {
+            introStage.style.transform = `perspective(1200px) rotateX(${-mouseNormY * 12}deg) rotateY(${mouseNormX * 16}deg)`;
+        }
+    });
+
+    window.addEventListener('touchmove', (e) => {
+        if (!isIntroActive || !e.touches[0]) return;
+        const touch = e.touches[0];
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        mouseNormX = (touch.clientX - cx) / cx;
+        mouseNormY = (touch.clientY - cy) / cy;
+        targetRotY = mouseNormX * 0.4;
+        targetRotX = -mouseNormY * 0.3;
+        if (introStage) {
+            introStage.style.transform = `perspective(1200px) rotateX(${-mouseNormY * 10}deg) rotateY(${mouseNormX * 12}deg)`;
+        }
+    }, { passive: true });
+
+    // 3D Stardust Particle Constellation
+    const NUM_PARTICLES = 65;
+    const particles = [];
+    for (let i = 0; i < NUM_PARTICLES; i++) {
+        const u = Math.random();
+        const v = Math.random();
+        const theta = u * 2.0 * Math.PI;
+        const phi = Math.acos(2.0 * v - 1.0);
+        const r = Math.cbrt(Math.random()) * 260 + 40;
+        const sinPhi = Math.sin(phi);
+        particles.push({
+            x: r * sinPhi * Math.cos(theta),
+            y: r * sinPhi * Math.sin(theta) * 0.55,
+            z: r * Math.cos(phi),
+            size: Math.random() * 2.2 + 0.8,
+            color: Math.random() > 0.4 ? '#38bdf8' : (Math.random() > 0.5 ? '#c084fc' : '#ffffff'),
+            alpha: Math.random() * 0.7 + 0.3,
+            pulseSpeed: Math.random() * 0.03 + 0.015,
+            pulsePhase: Math.random() * Math.PI * 2
+        });
+    }
+
+    // Comets / Photons racing the 3D infinity path
+    const comets = [
+        { t: 0, speed: 0.016, color: '#38bdf8', size: 5, trail: [] },
+        { t: Math.PI, speed: 0.016, color: '#c084fc', size: 4.5, trail: [] },
+        { t: Math.PI * 0.5, speed: -0.012, color: '#ffffff', size: 3.5, trail: [] }
+    ];
+
+    // Shockwave Rings at (0, 0, 0)
+    const shockwaves = [];
+    function spawnShockwave() {
+        shockwaves.push({
+            radius: 5,
+            maxRadius: 180,
+            alpha: 0.8,
+            speed: 3.5
+        });
+    }
+    let lastShockwaveTime = 0;
+
+    // 3D Rotation Transform helper
+    function rotate3D(x, y, z, rx, ry, rz) {
+        // Rotate X
+        const cosX = Math.cos(rx), sinX = Math.sin(rx);
+        const y1 = y * cosX - z * sinX;
+        const z1 = y * sinX + z * cosX;
+
+        // Rotate Y
+        const cosY = Math.cos(ry), sinY = Math.sin(ry);
+        const x2 = x * cosY + z1 * sinY;
+        const z2 = -x * sinY + z1 * cosY;
+
+        // Rotate Z
+        const cosZ = Math.cos(rz), sinZ = Math.sin(rz);
+        const x3 = x2 * cosZ - y1 * sinZ;
+        const y3 = x2 * sinZ + y1 * cosZ;
+
+        return { x: x3, y: y3, z: z2 };
+    }
+
+    // Parametric Infinity Curve Point in 3D
+    function getInfinityPoint(t, a, b, c) {
+        // Parametric Lemniscate of Gerono in 3D
+        const x = a * Math.sin(t);
+        const y = (b * 0.5) * Math.sin(2 * t);
+        const z = c * Math.cos(t);
+        return { x, y, z };
+    }
+
+    // Main 3D Render Loop
+    function render3D() {
+        if (!isIntroActive) return;
+
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Responsive Curve Scale
+        const scaleA = Math.min(w * 0.28, 230);
+        const scaleB = Math.min(w * 0.26, 210);
+        const scaleC = Math.min(w * 0.12, 110);
+
+        // Smooth rotation easing
+        rotY += (targetRotY - rotY) * 0.05 + 0.007;
+        rotX += (targetRotX - rotX) * 0.05 + 0.003;
+        rotZ += 0.002;
+
+        const fov = 420;
+
+        // 1. Draw 3D Stardust Particles
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.pulsePhase += p.pulseSpeed;
+            const currentAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.pulsePhase));
+
+            const rotated = rotate3D(p.x, p.y, p.z, rotX * 0.6, rotY * 0.8, rotZ * 0.5);
+            const pScale = fov / (fov + rotated.z);
+            if (pScale > 0) {
+                const sx = cx + rotated.x * pScale;
+                const sy = cy + rotated.y * pScale;
+                const sz = p.size * pScale;
+
+                ctx.beginPath();
+                ctx.arc(sx, sy, sz, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = Math.max(0, Math.min(currentAlpha * (0.3 + pScale * 0.7), 1));
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 8 * pScale;
+                ctx.fill();
+            }
+        }
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+
+        // 2. Draw 3D Infinity Ribbon Structure
+        const NUM_SEGMENTS = 160;
+        const ribbonPoints = [];
+
+        for (let i = 0; i <= NUM_SEGMENTS; i++) {
+            const t = (i / NUM_SEGMENTS) * Math.PI * 2;
+            const pt = getInfinityPoint(t, scaleA, scaleB, scaleC);
+            const rot = rotate3D(pt.x, pt.y, pt.z, rotX, rotY, rotZ);
+
+            const projScale = fov / (fov + rot.z);
+            const sx = cx + rot.x * projScale;
+            const sy = cy + rot.y * projScale;
+
+            ribbonPoints.push({
+                sx, sy, z: rot.z, scale: projScale, t
+            });
+        }
+
+        // Draw Continuous Glowing Curve with Depth Sorting
+        for (let i = 0; i < ribbonPoints.length - 1; i++) {
+            const p1 = ribbonPoints[i];
+            const p2 = ribbonPoints[i + 1];
+
+            const avgZ = (p1.z + p2.z) / 2;
+            const depthFactor = (avgZ + scaleC) / (scaleC * 2 + 1); // 0 (back) to 1 (front)
+            const alpha = 0.25 + depthFactor * 0.7;
+            const lineWidth = (1.5 + depthFactor * 3.5) * p1.scale;
+
+            ctx.beginPath();
+            ctx.moveTo(p1.sx, p1.sy);
+            ctx.lineTo(p2.sx, p2.sy);
+
+            // Shifting gradient color along curve
+            const hue = 190 + (p1.t / (Math.PI * 2)) * 120; // Cyan (190) to Violet/Magenta (310)
+            ctx.strokeStyle = `hsla(${hue}, 95%, 65%, ${alpha})`;
+            ctx.lineWidth = lineWidth;
+            ctx.shadowColor = `hsla(${hue}, 95%, 60%, 0.8)`;
+            ctx.shadowBlur = (6 + depthFactor * 14) * p1.scale;
+            ctx.stroke();
+        }
+        ctx.shadowBlur = 0;
+
+        // 3. Draw Traveling Photons / Comets & Trails
+        const now = Date.now();
+        comets.forEach(comet => {
+            comet.t = (comet.t + comet.speed + Math.PI * 2) % (Math.PI * 2);
+
+            const pt = getInfinityPoint(comet.t, scaleA, scaleB, scaleC);
+            const rot = rotate3D(pt.x, pt.y, pt.z, rotX, rotY, rotZ);
+            const pScale = fov / (fov + rot.z);
+            const sx = cx + rot.x * pScale;
+            const sy = cy + rot.y * pScale;
+
+            // Spawn shockwave when near center crossover
+            if (Math.abs(pt.x) < 18 && Math.abs(pt.y) < 18 && now - lastShockwaveTime > 550) {
+                spawnShockwave();
+                lastShockwaveTime = now;
+            }
+
+            // Save trail
+            comet.trail.push({ sx, sy, pScale, alpha: 1 });
+            if (comet.trail.length > 18) comet.trail.shift();
+
+            // Draw comet trail
+            for (let j = 0; j < comet.trail.length; j++) {
+                const tr = comet.trail[j];
+                tr.alpha *= 0.88;
+                const trailSize = (comet.size * 0.6) * (j / comet.trail.length) * tr.pScale;
+
+                ctx.beginPath();
+                ctx.arc(tr.sx, tr.sy, Math.max(1, trailSize), 0, Math.PI * 2);
+                ctx.fillStyle = comet.color;
+                ctx.globalAlpha = tr.alpha * 0.6;
+                ctx.fill();
+            }
+
+            // Draw comet head with intense radial aura
+            const headSize = comet.size * pScale;
+            const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, headSize * 3);
+            grad.addColorStop(0, '#ffffff');
+            grad.addColorStop(0.3, comet.color);
+            grad.addColorStop(1, 'transparent');
+
+            ctx.beginPath();
+            ctx.arc(sx, sy, headSize * 3, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.globalAlpha = 0.9;
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(sx, sy, headSize, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.globalAlpha = 1;
+            ctx.shadowColor = comet.color;
+            ctx.shadowBlur = 15;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        });
+
+        // 4. Draw Center Shockwaves
+        for (let k = shockwaves.length - 1; k >= 0; k--) {
+            const sw = shockwaves[k];
+            sw.radius += sw.speed;
+            sw.alpha *= 0.94;
+
+            if (sw.alpha < 0.02 || sw.radius > sw.maxRadius) {
+                shockwaves.splice(k, 1);
+                continue;
+            }
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, sw.radius * 1.4, sw.radius * 0.7, rotZ, 0, Math.PI * 2);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${sw.alpha * 0.7})`;
+            ctx.lineWidth = 2;
+            ctx.shadowColor = '#38bdf8';
+            ctx.shadowBlur = 10;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // 5. Update Skip Progress Ring
+        const elapsed = Date.now() - introStartTime;
+        const progress = Math.min(elapsed / INTRO_DURATION_MS, 1);
+        if (skipRingFill) {
+            const offset = 100 - (progress * 100);
+            skipRingFill.style.strokeDashoffset = offset;
+        }
+
+        // Auto Transition Check
+        if (elapsed >= INTRO_DURATION_MS) {
+            finishIntro();
+            return;
+        }
+
+        animId = requestAnimationFrame(render3D);
+    }
+
+    // Finish & Transition to Main Website
+    let isTransitioning = false;
+    function finishIntro() {
+        if (isTransitioning || !isIntroActive) return;
+        isTransitioning = true;
+
+        introOverlay.classList.add('intro-closing');
+
+        // Trigger ignition burst on Navbar Infinity Logo
+        if (navbarInfinityBadge) {
+            navbarInfinityBadge.classList.remove('logo-ignited');
+            void navbarInfinityBadge.offsetWidth; // trigger reflow
+            navbarInfinityBadge.classList.add('logo-ignited');
+        }
+
+        // Complete closing after animation
+        setTimeout(() => {
+            isIntroActive = false;
+            cancelAnimationFrame(animId);
+            introOverlay.style.display = 'none';
+            document.body.style.overflow = '';
+            isTransitioning = false;
+        }, 650);
+    }
+
+    // Replay Function (Public API)
+    window.playIntro3D = function () {
+        if (isIntroActive) return;
+        isIntroActive = true;
+        isTransitioning = false;
+        introStartTime = Date.now();
+
+        document.body.style.overflow = 'hidden';
+        introOverlay.style.display = 'flex';
+        introOverlay.classList.remove('intro-closing');
+
+        if (introStage) {
+            introStage.style.transform = 'none';
+        }
+
+        // Restart animation loop
+        resizeCanvas();
+        animId = requestAnimationFrame(render3D);
+    };
+
+    // Event Listeners
+    if (enterBtn) {
+        enterBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            finishIntro();
+        });
+    }
+
+    if (skipBtn) {
+        skipBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            finishIntro();
+        });
+    }
+
+    // Keyboard controls (Esc or Space to skip)
+    window.addEventListener('keydown', (e) => {
+        if (isIntroActive && (e.key === 'Escape' || e.key === ' ')) {
+            finishIntro();
+        }
+    });
+
+    // Replay Button in Navbar
+    if (introReplayBtn) {
+        introReplayBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (mobileMenu && navMenu) {
+                mobileMenu.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+            window.playIntro3D();
+        });
+    }
+
+    // Clicking Navbar Brand Logo to Replay 3D Intro
+    if (brandLogo) {
+        brandLogo.addEventListener('click', (e) => {
+            // If already at top of home, replay 3D intro
+            if (window.scrollY < 100) {
+                e.preventDefault();
+                window.playIntro3D();
+            }
+        });
+    }
+
+    // Start 3D Render Loop
+    animId = requestAnimationFrame(render3D);
+})();
+
